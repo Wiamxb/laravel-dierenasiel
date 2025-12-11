@@ -5,7 +5,15 @@
         </h2>
     </x-slot>
 
-    <div class="p-6">
-        <p>Admin FAQ categorie overzicht werkt.</p>
+    <div class="py-6 px-6">
+        @if ($categories->count())
+            <ul>
+                @foreach ($categories as $category)
+                    <li>- {{ $category->name }}</li>
+                @endforeach
+            </ul>
+        @else
+            <p>Geen categorieën gevonden.</p>
+        @endif
     </div>
 </x-app-layout>

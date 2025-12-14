@@ -26,7 +26,7 @@ class FaqItemController extends Controller
         $request->validate([
             'question' => 'required|string',
             'answer' => 'required|string',
-            'faq_category_id' => 'required|exists:faq_categories,id',
+            'faq_category_id' => 'nullable|exists:faq_categories,id',
         ]);
 
         FaqItem::create([

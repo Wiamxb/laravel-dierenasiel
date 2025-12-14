@@ -7,7 +7,6 @@ use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\FaqController;
 
-
 Route::view('/', 'welcome');
 
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
@@ -32,6 +31,7 @@ Route::middleware(['auth'])->group(function () {
     Route::put('/admin/news/{newsItem}', [NewsItemController::class, 'update'])->name('news.update');
     Route::delete('/admin/news/{newsItem}', [NewsItemController::class, 'destroy'])->name('news.destroy');
 
+    // FAQ categorieën
     Route::get('/admin/faq/categories', [FaqCategoryController::class, 'index'])
         ->name('admin.faq.categories.index');
 
@@ -41,6 +41,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/faq/categories', [FaqCategoryController::class, 'store'])
         ->name('admin.faq.categories.store');
 
+    // FAQ items
     Route::get('/admin/faq/items', [FaqItemController::class, 'index'])
         ->name('admin.faq.items.index');
 
@@ -49,6 +50,16 @@ Route::middleware(['auth'])->group(function () {
 
     Route::post('/admin/faq/items', [FaqItemController::class, 'store'])
         ->name('admin.faq.items.store');
+
+    // 🔽 DIT WAS NOG NODIG
+    Route::get('/admin/faq/items/{item}/edit', [FaqItemController::class, 'edit'])
+        ->name('admin.faq.items.edit');
+
+    Route::put('/admin/faq/items/{item}', [FaqItemController::class, 'update'])
+        ->name('admin.faq.items.update');
+
+    Route::delete('/admin/faq/items/{item}', [FaqItemController::class, 'destroy'])
+        ->name('admin.faq.items.destroy');
 });
 
 require __DIR__.'/auth.php';

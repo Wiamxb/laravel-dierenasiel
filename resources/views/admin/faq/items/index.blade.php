@@ -16,7 +16,10 @@
                 @foreach ($items as $item)
                     <li class="mb-4">
                         <strong>{{ $item->question }}</strong><br>
-                        <em>Categorie: {{ $item->category?->name ?? 'Geen categorie' }}</em>
+                        <span class="text-gray-600">
+                            Categorie:
+                            {{ $item->category?->name ?? 'Geen categorie' }}
+                        </span>
                     </li>
                 @endforeach
             </ul>

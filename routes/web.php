@@ -5,8 +5,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqItemController;
+use App\Http\Controllers\FaqController;
+
 
 Route::view('/', 'welcome');
+
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
 Route::get('/news', [NewsItemController::class, 'index'])->name('news.index');
 Route::get('/news/{newsItem}', [NewsItemController::class, 'show'])->name('news.show');

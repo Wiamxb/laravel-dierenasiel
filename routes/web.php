@@ -60,6 +60,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/admin/faq/items/{item}', [FaqItemController::class, 'destroy'])
         ->name('admin.faq.items.destroy');
+
+    Route::delete('/admin/faq/items/{item}', [FaqItemController::class, 'destroy'])
+        ->name('admin.faq.items.destroy');
+
 });
 
 require __DIR__.'/auth.php';

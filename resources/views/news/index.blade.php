@@ -8,8 +8,8 @@
         </div>
     </x-slot>
 
-    <div class="py-10 bg-emerald-50">
-        <div class="max-w-7xl mx-auto px-6">
+    <div class="py-10 bg-emerald-50 min-h-screen">
+    <div class="max-w-7xl mx-auto px-6">
 
             {{-- ADMIN: nieuws toevoegen --}}
             @auth

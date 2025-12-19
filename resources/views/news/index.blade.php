@@ -11,6 +11,19 @@
     <div class="py-10 bg-emerald-50">
         <div class="max-w-7xl mx-auto px-6">
 
+            {{-- ADMIN: nieuws toevoegen --}}
+            @auth
+                @if(auth()->user()->is_admin)
+                    <div class="flex justify-end mb-6">
+                        <a href="{{ route('news.create') }}"
+                           class="inline-flex items-center px-5 py-2 bg-emerald-700 text-white font-semibold
+                                  rounded-lg hover:bg-emerald-800 transition shadow">
+                            + Nieuws toevoegen
+                        </a>
+                    </div>
+                @endif
+            @endauth
+
             @if ($news->count())
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($news as $item)

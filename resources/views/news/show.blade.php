@@ -1,12 +1,25 @@
 <x-app-layout>
     <div class="py-10 bg-emerald-50 min-h-screen">
-    <div class="max-w-4xl mx-auto px-6">
+        <div class="max-w-4xl mx-auto px-6">
 
-            <!-- Terug knop -->
-            <a href="{{ route('news.index') }}"
-               class="inline-flex items-center text-emerald-700 font-medium mb-6 hover:underline">
-                ← Terug naar nieuws
-            </a>
+            <!-- Bovenbalk: terug + bewerken -->
+            <div class="flex justify-between items-center mb-6">
+                <a href="{{ route('news.index') }}"
+                   class="text-sm text-emerald-700 hover:underline">
+                    ← Terug naar nieuws
+                </a>
+
+                @auth
+                    @if(auth()->user()->is_admin === 1)
+                        <a href="{{ route('news.edit', $newsItem) }}"
+                           class="px-4 py-2 text-sm font-medium
+                                  bg-emerald-700 text-white
+                                  rounded-md hover:bg-emerald-800 transition">
+                            Bewerken
+                        </a>
+                    @endif
+                @endauth
+            </div>
 
             <article class="bg-white rounded-2xl shadow-lg overflow-hidden border border-emerald-100">
 
@@ -19,7 +32,6 @@
                 @endif
 
                 <div class="p-8">
-
                     <h1 class="text-3xl font-bold text-gray-900 mb-2">
                         {{ $newsItem->title }}
                     </h1>
@@ -31,8 +43,8 @@
                     <div class="prose max-w-none text-gray-700">
                         {{ $newsItem->content }}
                     </div>
-
                 </div>
+
             </article>
 
         </div>

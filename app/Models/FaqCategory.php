@@ -13,7 +13,6 @@ class FaqCategory extends Model
         return $this->hasMany(FaqItem::class, 'faq_category_id');
     }
 
-    // optioneel, maar handig als je oude code had
     public function items()
     {
         return $this->faqItems();

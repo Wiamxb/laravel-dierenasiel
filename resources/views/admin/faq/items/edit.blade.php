@@ -1,49 +1,101 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            FAQ vraag bewerken
-        </h2>
+        <div>
+            <h1 class="text-2xl font-semibold text-gray-900">
+                FAQ-vraag bewerken
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">
+                Pas de geselecteerde veelgestelde vraag aan
+            </p>
+        </div>
     </x-slot>
 
-    <div class="py-6 px-6 max-w-xl">
-        <form method="POST" action="{{ route('admin.faq.items.update', $item) }}">
-            @csrf
-            @method('PUT')
+    <div class="bg-emerald-50 min-h-screen py-10">
+        <div class="max-w-2xl mx-auto px-6">
 
-            <div class="mb-4">
-                <label class="block font-semibold mb-1">Vraag</label>
-                <input
-                    type="text"
-                    name="question"
-                    value="{{ old('question', $item->question) }}"
-                    class="w-full border rounded p-2"
-                >
+            {{-- Terug --}}
+            <a href="{{ route('admin.faq.items.index') }}"
+               class="inline-block text-sm text-emerald-700 mb-6 hover:underline">
+                ← Terug naar FAQ beheer
+            </a>
+
+            <div class="bg-white border border-emerald-100 rounded-xl shadow-sm p-6">
+
+                <form method="POST"
+                      action="{{ route('admin.faq.items.update', $item) }}"
+                      class="space-y-5">
+                    @csrf
+                    @method('PUT')
+
+                    {{-- VRAAG --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Vraag
+                        </label>
+                        <input
+                            type="text"
+                            name="question"
+                            value="{{ old('question', $item->question) }}"
+                            class="w-full rounded-md border-gray-300 text-sm
+                                   focus:border-emerald-500 focus:ring-emerald-500"
+                            required
+                        >
+                    </div>
+
+                    {{-- ANTWOORD --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Antwoord
+                        </label>
+                        <textarea
+                            name="answer"
+                            rows="4"
+                            class="w-full rounded-md border-gray-300 text-sm
+                                   focus:border-emerald-500 focus:ring-emerald-500"
+                            required
+                        >{{ old('answer', $item->answer) }}</textarea>
+                    </div>
+
+                    {{-- CATEGORIE --}}
+                    <div>
+                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                            Categorie
+                        </label>
+                        <select
+                            name="category_id"
+                            class="w-full rounded-md border-gray-300 text-sm
+                                   focus:border-emerald-500 focus:ring-emerald-500">
+                            <option value="">Geen categorie</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}"
+                                    @selected(old('category_id', $item->category_id) == $category->id)>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    {{-- ACTIES --}}
+                    <div class="flex justify-end items-center gap-4 pt-4">
+                        <a href="{{ route('admin.faq.items.index') }}"
+                           class="px-4 py-2 text-sm font-medium
+                                  text-gray-600 border border-gray-300
+                                  rounded-md hover:bg-gray-100 transition">
+                            Annuleren
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="px-4 py-2 text-sm font-medium
+                                   bg-emerald-700 text-white
+                                   rounded-md hover:bg-emerald-800 transition">
+                            Opslaan
+                        </button>
+                    </div>
+
+                </form>
             </div>
 
-            <div class="mb-4">
-                <label class="block font-semibold mb-1">Antwoord</label>
-                <textarea
-                    name="answer"
-                    class="w-full border rounded p-2"
-                    rows="4"
-                >{{ old('answer', $item->answer) }}</textarea>
-            </div>
-
-            <div class="mb-4">
-                <label class="block font-semibold mb-1">Categorie</label>
-                <select name="faq_category_id" class="w-full border rounded p-2">
-                    @foreach ($categories as $category)
-                        <option value="{{ $category->id }}"
-                            @selected(old('faq_category_id', $item->faq_category_id) == $category->id)>
-                            {{ $category->name }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
-
-            <button class="bg-blue-600 text-white px-4 py-2 rounded">
-                Opslaan
-            </button>
-        </form>
+        </div>
     </div>
 </x-app-layout>

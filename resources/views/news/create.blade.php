@@ -83,19 +83,22 @@
 
                     <!-- ACTIES -->
                     <div class="flex justify-end items-center gap-4 pt-4">
-                        <a href="{{ route('news.index') }}"
-                           class="text-sm font-medium text-gray-600 hover:underline">
+                        <a href="{{ route('admin.faq.items.index') }}"
+                           class="px-4 py-2 text-sm font-medium
+              text-gray-600 border border-gray-300
+              rounded-md hover:bg-gray-100 transition">
                             Annuleren
                         </a>
 
                         <button
                             type="submit"
                             class="px-4 py-2 text-sm font-medium
-                                   bg-emerald-700 text-white
-                                   rounded-md hover:bg-emerald-800 transition">
+               bg-emerald-700 text-white
+               rounded-md hover:bg-emerald-800 transition">
                             Opslaan
                         </button>
                     </div>
+
 
                 </form>
             </div>

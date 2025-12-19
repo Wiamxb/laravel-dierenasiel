@@ -1,83 +1,85 @@
 <x-app-layout>
     <x-slot name="header">
         <div>
-            <h1 class="font-bold text-2xl text-gray-900">FAQ Beheer</h1>
-            <p class="text-gray-600 mt-1">Beheer alle veelgestelde vragen</p>
+            <h1 class="text-2xl font-semibold text-gray-900">
+                FAQ beheer
+            </h1>
+            <p class="text-sm text-gray-500 mt-1">
+                Beheer alle veelgestelde vragen van het dierenasiel
+            </p>
         </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="bg-emerald-50 min-h-screen py-10">
+        <div class="max-w-4xl mx-auto px-6">
 
-            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-                <div class="text-sm text-gray-600">
-                    Totaal: <span class="font-semibold text-gray-900">{{ $items->count() }}</span> vragen
-                </div>
+            {{-- Topbar --}}
+            <div class="flex justify-between items-center mb-6">
+                <p class="text-sm text-gray-600">
+                    Totaal: <strong>{{ $items->count() }}</strong> vragen
+                </p>
 
                 <a href="{{ route('admin.faq.items.create') }}"
-                   class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2.5 rounded-lg font-semibold shadow-sm transition">
+                   class="inline-flex items-center px-4 py-2
+                          bg-emerald-700 text-white text-sm font-medium
+                          rounded-lg hover:bg-emerald-800 transition shadow">
                     + Nieuwe vraag
                 </a>
             </div>
 
-            @if ($items->count())
-                <div class="grid gap-4">
-                    @foreach ($items as $item)
-                        <div class="bg-white rounded-xl border border-gray-200 p-6 shadow-sm hover:shadow-md transition">
-                            <div class="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
+            {{-- FAQ items --}}
+            <div class="space-y-4">
+                @forelse ($items as $item)
+                    <div class="bg-white border border-emerald-100 rounded-xl shadow-sm p-5">
 
-                                <div class="flex-1">
-                                    <h3 class="text-lg font-semibold text-gray-900">
-                                        {{ $item->question }}
-                                    </h3>
+                        <div class="flex justify-between items-start gap-6">
+                            <div>
+                                <h2 class="text-lg font-semibold text-gray-900">
+                                    {{ $item->question }}
+                                </h2>
 
-                                    <div class="mt-3 flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-6 text-sm">
-                                        <div>
-                                            <span class="text-gray-500 font-medium">Categorie:</span>
-                                            <span class="text-gray-900">{{ $item->category?->name ?? 'Geen categorie' }}</span>
-                                        </div>
+                                <p class="text-sm text-gray-500 mt-1">
+                                    Categorie:
+                                    <span class="font-medium">
+                                        {{ $item->category->name ?? 'Geen categorie' }}
+                                    </span>
+                                    · Bijgewerkt: {{ $item->updated_at->format('d-m-Y') }}
+                                </p>
+                            </div>
 
-                                        <div>
-                                            <span class="text-gray-500 font-medium">Bijgewerkt:</span>
-                                            <span class="text-gray-900">{{ $item->updated_at->format('d-m-Y') }}</span>
-                                        </div>
-                                    </div>
-                                </div>
+                            {{-- Acties --}}
+                            <div class="flex items-center gap-3">
+                                <a href="{{ route('admin.faq.items.edit', $item) }}"
+                                   confirm("Weet je zeker dat je deze vraag wil verwijderen?")
+                                class="px-3 py-1.5 text-sm font-medium
+                                text-emerald-700 border border-emerald-600
+                                rounded-md hover:bg-emerald-50 transition">
+                                Bewerken
+                                </a>
 
-                                <div class="flex items-center gap-3 md:pt-1">
-                                    <a href="{{ route('admin.faq.items.edit', $item) }}"
-                                       class="inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium border border-blue-600 text-blue-700 hover:bg-blue-50 transition">
-                                        Bewerken
-                                    </a>
-
-                                    <form action="{{ route('admin.faq.items.destroy', $item) }}"
-                                          method="POST"
-                                          onsubmit="return confirm('Weet je zeker dat je deze vraag wil verwijderen?')">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="inline-flex items-center justify-center px-4 py-2 rounded-lg font-medium bg-red-600 hover:bg-red-700 text-white transition">
-                                            Verwijderen
-                                        </button>
-                                    </form>
-                                </div>
-
+                                <form method="POST"
+                                      action="{{ route('admin.faq.items.destroy', $item) }}">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        class="px-3 py-1.5 text-sm font-medium
+                                               text-white bg-red-600
+                                               rounded-md hover:bg-red-700 transition">
+                                        Verwijderen
+                                    </button>
+                                </form>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-            @else
-                <div class="text-center py-16 bg-white rounded-xl border border-gray-200">
-                    <div class="max-w-md mx-auto px-6">
-                        <h3 class="text-xl font-semibold text-gray-900 mb-3">Nog geen FAQ vragen</h3>
-                        <p class="text-gray-600 mb-6">Voeg je eerste vraag toe om bezoekers te helpen.</p>
-                        <a href="{{ route('admin.faq.items.create') }}"
-                           class="inline-flex items-center justify-center bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold shadow-sm transition">
-                            Eerste vraag toevoegen
-                        </a>
+
                     </div>
-                </div>
-            @endif
+                @empty
+                    <div class="bg-white border border-emerald-200 rounded-xl p-10 text-center">
+                        <p class="text-gray-600">
+                            Er zijn nog geen FAQ-vragen aangemaakt.
+                        </p>
+                    </div>
+                @endforelse
+            </div>
 
         </div>
     </div>

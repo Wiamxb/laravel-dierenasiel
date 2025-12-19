@@ -1,6 +1,6 @@
 <x-app-layout>
-    <div class="py-10 bg-emerald-50">
-        <div class="max-w-4xl mx-auto px-6">
+    <div class="py-10 bg-emerald-50 min-h-screen">
+    <div class="max-w-4xl mx-auto px-6">
 
             <!-- Terug knop -->
             <a href="{{ route('news.index') }}"

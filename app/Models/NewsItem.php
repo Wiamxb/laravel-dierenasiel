@@ -17,6 +17,11 @@ class NewsItem extends Model
         'user_id',
     ];
 
+    // Zorgt ervoor dat published_at een Carbon datum is
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
+
     // Relatie met user (admin)
     public function user()
     {

@@ -17,55 +17,52 @@ class FaqItemController extends Controller
 
     public function create()
     {
-        $categories = FaqCategory::all();
+        $categories = FaqCategory::orderBy('name')->get();
         return view('admin.faq.items.create', compact('categories'));
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'question' => 'required|string',
+        $validated = $request->validate([
+            'question' => 'required|string|max:255',
             'answer' => 'required|string',
-            'faq_category_id' => 'nullable|exists:faq_categories,id',
+            'faq_category_id' => 'required|exists:faq_categories,id',
         ]);
 
-        FaqItem::create([
-            'question' => $request->question,
-            'answer' => $request->answer,
-            'faq_category_id' => $request->faq_category_id,
-        ]);
+        FaqItem::create($validated);
 
-        return redirect()->route('admin.faq.items.index');
+        return redirect()
+            ->route('admin.faq.items.index')
+            ->with('success', 'FAQ-vraag succesvol toegevoegd.');
     }
 
-    /** 👉 DIT ONTBRAK */
     public function edit(FaqItem $item)
     {
-        $categories = FaqCategory::all();
+        $categories = FaqCategory::orderBy('name')->get();
         return view('admin.faq.items.edit', compact('item', 'categories'));
     }
 
-    /** 👉 EN DIT OOK */
     public function update(Request $request, FaqItem $item)
     {
-        $request->validate([
-            'question' => 'required|string',
+        $validated = $request->validate([
+            'question' => 'required|string|max:255',
             'answer' => 'required|string',
-            'faq_category_id' => 'nullable|exists:faq_categories,id',
+            'faq_category_id' => 'required|exists:faq_categories,id',
         ]);
 
-        $item->update([
-            'question' => $request->question,
-            'answer' => $request->answer,
-            'faq_category_id' => $request->faq_category_id,
-        ]);
+        $item->update($validated);
 
-        return redirect()->route('admin.faq.items.index');
+        return redirect()
+            ->route('admin.faq.items.index')
+            ->with('success', 'FAQ-vraag succesvol aangepast.');
     }
 
     public function destroy(FaqItem $item)
     {
         $item->delete();
-        return redirect()->route('admin.faq.items.index');
+
+        return redirect()
+            ->route('admin.faq.items.index')
+            ->with('success', 'FAQ-vraag verwijderd.');
     }
 }

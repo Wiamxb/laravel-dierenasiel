@@ -8,8 +8,14 @@ class FaqCategory extends Model
 {
     protected $fillable = ['name'];
 
+    public function faqItems()
+    {
+        return $this->hasMany(FaqItem::class, 'faq_category_id');
+    }
+
+    // optioneel, maar handig als je oude code had
     public function items()
     {
-        return $this->hasMany(FaqItem::class);
+        return $this->faqItems();
     }
 }

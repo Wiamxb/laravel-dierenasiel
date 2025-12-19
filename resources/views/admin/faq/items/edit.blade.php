@@ -13,21 +13,19 @@
     <div class="bg-emerald-50 min-h-screen py-10">
         <div class="max-w-2xl mx-auto px-6">
 
-            {{-- Terug --}}
             <a href="{{ route('admin.faq.items.index') }}"
                class="inline-block text-sm text-emerald-700 mb-6 hover:underline">
                 ← Terug naar FAQ beheer
             </a>
 
             <div class="bg-white border border-emerald-100 rounded-xl shadow-sm p-6">
-
                 <form method="POST"
                       action="{{ route('admin.faq.items.update', $item) }}"
                       class="space-y-5">
                     @csrf
                     @method('PUT')
 
-                    {{-- VRAAG --}}
+                    {{-- Vraag --}}
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1">
                             Vraag
@@ -42,7 +40,7 @@
                         >
                     </div>
 
-                    {{-- ANTWOORD --}}
+                    {{-- Antwoord --}}
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1">
                             Antwoord
@@ -56,26 +54,27 @@
                         >{{ old('answer', $item->answer) }}</textarea>
                     </div>
 
-                    {{-- CATEGORIE --}}
+                    {{-- Categorie --}}
                     <div>
                         <label class="block text-sm font-semibold text-gray-700 mb-1">
                             Categorie
                         </label>
                         <select
-                            name="category_id"
+                            name="faq_category_id"
                             class="w-full rounded-md border-gray-300 text-sm
-                                   focus:border-emerald-500 focus:ring-emerald-500">
-                            <option value="">Geen categorie</option>
+                                   focus:border-emerald-500 focus:ring-emerald-500"
+                            required
+                        >
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}"
-                                    @selected(old('category_id', $item->category_id) == $category->id)>
+                                    @selected(old('faq_category_id', $item->faq_category_id) == $category->id)>
                                     {{ $category->name }}
                                 </option>
                             @endforeach
                         </select>
                     </div>
 
-                    {{-- ACTIES --}}
+                    {{-- Acties --}}
                     <div class="flex justify-end items-center gap-4 pt-4">
                         <a href="{{ route('admin.faq.items.index') }}"
                            class="px-4 py-2 text-sm font-medium
@@ -92,7 +91,6 @@
                             Opslaan
                         </button>
                     </div>
-
                 </form>
             </div>
 

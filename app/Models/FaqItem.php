@@ -14,6 +14,6 @@ class FaqItem extends Model
 
     public function category()
     {
-        return $this->belongsTo(FaqCategory::class);
+        return $this->belongsTo(FaqCategory::class, 'faq_category_id');
     }
 }

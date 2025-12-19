@@ -10,7 +10,8 @@ class FaqCategoryController extends Controller
 {
     public function index()
     {
-        $categories = FaqCategory::all();
+        $categories = FaqCategory::withCount('faqItems')->get();
+
         return view('admin.faq.categories.index', compact('categories'));
     }
 

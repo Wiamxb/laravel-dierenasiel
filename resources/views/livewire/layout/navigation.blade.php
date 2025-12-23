@@ -31,6 +31,13 @@
                         FAQ
                     </a>
 
+                    <!-- ✅ CONTACT (voor iedereen) -->
+                    <a href="{{ route('contact.create') }}"
+                       class="text-white hover:text-green-200 font-medium transition
+                              px-3 py-2 rounded-lg hover:bg-green-600">
+                        Contact
+                    </a>
+
                     {{-- ADMIN DROPDOWN --}}
                     @auth
                         @if(auth()->user()->is_admin)
@@ -49,7 +56,7 @@
                                     </svg>
                                 </button>
 
-                                <!-- Dropdown (GEEN hover-gap meer) -->
+                                <!-- Dropdown -->
                                 <div class="absolute left-0 top-full pt-2 w-52 hidden group-hover:block z-50">
                                     <div class="bg-white rounded-lg shadow-lg border border-emerald-100 overflow-hidden">
 
@@ -61,6 +68,12 @@
                                         <a href="{{ route('admin.faq.categories.index') }}"
                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
                                             FAQ categorieën
+                                        </a>
+
+                                        <!-- ✅ ADMIN CONTACT -->
+                                        <a href="{{ route('admin.contact.index') }}"
+                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
+                                            Contactberichten
                                         </a>
 
                                     </div>

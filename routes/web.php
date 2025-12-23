@@ -6,6 +6,7 @@ use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ContactController; //
 
 Route::view('/', 'welcome');
 
@@ -15,6 +16,9 @@ Route::get('/news', [NewsItemController::class, 'index'])->name('news.index');
 Route::get('/news/{newsItem}', [NewsItemController::class, 'show'])->name('news.show');
 
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+
+Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
+Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
 Route::view('/dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
@@ -51,7 +55,6 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/faq/items', [FaqItemController::class, 'store'])
         ->name('admin.faq.items.store');
 
-    // 🔽 DIT WAS NOG NODIG
     Route::get('/admin/faq/items/{item}/edit', [FaqItemController::class, 'edit'])
         ->name('admin.faq.items.edit');
 
@@ -60,10 +63,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/admin/faq/items/{item}', [FaqItemController::class, 'destroy'])
         ->name('admin.faq.items.destroy');
-
-    Route::delete('/admin/faq/items/{item}', [FaqItemController::class, 'destroy'])
-        ->name('admin.faq.items.destroy');
-
 });
 
 require __DIR__.'/auth.php';

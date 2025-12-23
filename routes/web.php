@@ -6,7 +6,8 @@ use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\FaqController;
-use App\Http\Controllers\ContactController; //
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\Admin\ContactMessageController; // ✅ TOEGEVOEGD
 
 Route::view('/', 'welcome');
 
@@ -63,6 +64,10 @@ Route::middleware(['auth'])->group(function () {
 
     Route::delete('/admin/faq/items/{item}', [FaqItemController::class, 'destroy'])
         ->name('admin.faq.items.destroy');
+
+    // ADMIN CONTACT BERICHTEN
+    Route::get('/admin/contact', [ContactMessageController::class, 'index'])
+        ->name('admin.contact.index');
 });
 
 require __DIR__.'/auth.php';

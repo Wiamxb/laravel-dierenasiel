@@ -46,7 +46,7 @@
             </div>
 
             <!-- RIGHT (desktop) -->
-            <div class="hidden sm:flex items-center space-x-6">
+            <div class="hidden sm:flex items-center space-x-4">
 
                 {{-- GUEST --}}
                 @guest
@@ -66,15 +66,14 @@
                 {{-- AUTH --}}
                 @auth
 
-                    {{-- ADMIN DROPDOWN --}}
+                    {{-- ADMIN --}}
                     @if(auth()->user()->is_admin)
                         <div class="relative">
                             <button
                                 type="button"
                                 @click="openAdmin = !openAdmin"
                                 class="text-green-100 font-semibold hover:text-white transition
-                                       px-3 py-2 rounded-lg hover:bg-green-600
-                                       flex items-center gap-1">
+                                       px-3 py-2 rounded-lg hover:bg-green-600 flex items-center gap-1">
                                 Admin
                                 <svg class="w-4 h-4 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -90,25 +89,9 @@
                                 style="display: none;"
                             >
                                 <div class="bg-white rounded-lg shadow-lg border border-emerald-100 overflow-hidden">
-
                                     <a href="{{ route('admin.dashboard') }}"
                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
                                         Dashboard
-                                    </a>
-
-                                    <a href="{{ route('admin.faq.items.index') }}"
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
-                                        FAQ vragen
-                                    </a>
-
-                                    <a href="{{ route('admin.faq.categories.index') }}"
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
-                                        FAQ categorieën
-                                    </a>
-
-                                    <a href="{{ route('admin.contact.index') }}"
-                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
-                                        Contactberichten
                                     </a>
 
                                     <a href="{{ route('admin.users.index') }}"
@@ -120,9 +103,12 @@
                         </div>
                     @endif
 
-                    <span class="text-sm text-green-100 font-medium">
-                        {{ auth()->user()->name }}
-                    </span>
+                    <!-- PROFIEL (ENKEL ÉÉN LINK) -->
+                    <a href="{{ route('profile.show', auth()->user()->id) }}"
+                       class="text-white hover:text-green-200 font-medium transition
+                              px-3 py-2 rounded-lg hover:bg-green-600">
+                        Profiel
+                    </a>
 
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
@@ -148,76 +134,41 @@
         <div x-show="open" x-transition class="sm:hidden pb-4" style="display: none;">
             <div class="mt-2 space-y-1">
 
-                <a href="{{ url('/') }}"
-                   class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                <a href="{{ url('/') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
                     Home
                 </a>
 
-                <a href="{{ route('news.index') }}"
-                   class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                <a href="{{ route('news.index') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
                     Nieuws
                 </a>
 
-                <a href="{{ route('faq.index') }}"
-                   class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                <a href="{{ route('faq.index') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
                     FAQ
                 </a>
 
-                <a href="{{ route('contact.create') }}"
-                   class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                <a href="{{ route('contact.create') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
                     Contact
                 </a>
 
                 @guest
-                    <a href="{{ route('login') }}"
-                       class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                    <a href="{{ route('login') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
                         Inloggen
                     </a>
 
-                    <a href="{{ route('register') }}"
-                       class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                    <a href="{{ route('register') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
                         Registreren
                     </a>
                 @endguest
 
                 @auth
-                    @if(auth()->user()->is_admin)
-                        <div class="mt-2 pt-2 border-t border-green-600">
-                            <p class="text-green-100 text-xs px-3 py-1 uppercase tracking-wide">
-                                Admin
-                            </p>
-
-                            <a href="{{ route('admin.dashboard') }}"
-                               class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
-                                Dashboard
-                            </a>
-
-                            <a href="{{ route('admin.faq.items.index') }}"
-                               class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
-                                FAQ vragen
-                            </a>
-
-                            <a href="{{ route('admin.faq.categories.index') }}"
-                               class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
-                                FAQ categorieën
-                            </a>
-
-                            <a href="{{ route('admin.contact.index') }}"
-                               class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
-                                Contactberichten
-                            </a>
-
-                            <a href="{{ route('admin.users.index') }}"
-                               class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
-                                Gebruikersbeheer
-                            </a>
-                        </div>
-                    @endif
+                    <a href="{{ route('profile.show', auth()->user()->id) }}"
+                       class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                        Profiel
+                    </a>
 
                     <form method="POST" action="{{ route('logout') }}" class="mt-2">
                         @csrf
-                        <button
-                            class="w-full text-left text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                        <button class="w-full text-left text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
                             Uitloggen
                         </button>
                     </form>

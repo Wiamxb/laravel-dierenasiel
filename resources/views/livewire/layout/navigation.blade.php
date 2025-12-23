@@ -31,14 +31,14 @@
                         FAQ
                     </a>
 
-                    <!-- ✅ CONTACT (voor iedereen) -->
+                    <!-- Contact (voor iedereen) -->
                     <a href="{{ route('contact.create') }}"
                        class="text-white hover:text-green-200 font-medium transition
                               px-3 py-2 rounded-lg hover:bg-green-600">
                         Contact
                     </a>
 
-                    {{-- ADMIN DROPDOWN --}}
+                    <!-- ADMIN DROPDOWN -->
                     @auth
                         @if(auth()->user()->is_admin)
                             <div class="relative group">
@@ -57,9 +57,10 @@
                                 </button>
 
                                 <!-- Dropdown -->
-                                <div class="absolute left-0 top-full pt-2 w-52 hidden group-hover:block z-50">
+                                <div class="absolute left-0 top-full pt-2 w-56 hidden group-hover:block z-50">
                                     <div class="bg-white rounded-lg shadow-lg border border-emerald-100 overflow-hidden">
 
+                                        <!-- FAQ eerst -->
                                         <a href="{{ route('admin.faq.items.index') }}"
                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
                                             FAQ vragen
@@ -70,10 +71,16 @@
                                             FAQ categorieën
                                         </a>
 
-                                        <!-- ✅ ADMIN CONTACT -->
+                                        <!-- Contact -->
                                         <a href="{{ route('admin.contact.index') }}"
                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
                                             Contactberichten
+                                        </a>
+
+                                        <!-- Gebruikersbeheer als laatste -->
+                                        <a href="{{ route('admin.users.index') }}"
+                                           class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
+                                            Gebruikersbeheer
                                         </a>
 
                                     </div>

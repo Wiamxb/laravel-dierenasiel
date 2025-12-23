@@ -7,7 +7,8 @@ use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\Admin\ContactMessageController; // ✅ TOEGEVOEGD
+use App\Http\Controllers\Admin\ContactMessageController;
+use App\Http\Controllers\Admin\UserController;
 
 Route::view('/', 'welcome');
 
@@ -27,45 +28,44 @@ Route::view('/dashboard', 'dashboard')
 
 Route::middleware(['auth'])->group(function () {
 
+    // PROFIEL
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
 
+    // ADMIN USERS ✅
+    Route::get('/admin/users', [UserController::class, 'index'])
+        ->name('admin.users.index');
+
+    // ADMIN NEWS
     Route::get('/admin/news/create', [NewsItemController::class, 'create'])->name('news.create');
     Route::post('/admin/news', [NewsItemController::class, 'store'])->name('news.store');
     Route::get('/admin/news/{newsItem}/edit', [NewsItemController::class, 'edit'])->name('news.edit');
     Route::put('/admin/news/{newsItem}', [NewsItemController::class, 'update'])->name('news.update');
     Route::delete('/admin/news/{newsItem}', [NewsItemController::class, 'destroy'])->name('news.destroy');
 
-    // FAQ categorieën
+    // FAQ CATEGORIEËN
     Route::get('/admin/faq/categories', [FaqCategoryController::class, 'index'])
         ->name('admin.faq.categories.index');
-
     Route::get('/admin/faq/categories/create', [FaqCategoryController::class, 'create'])
         ->name('admin.faq.categories.create');
-
     Route::post('/admin/faq/categories', [FaqCategoryController::class, 'store'])
         ->name('admin.faq.categories.store');
 
-    // FAQ items
+    // FAQ ITEMS
     Route::get('/admin/faq/items', [FaqItemController::class, 'index'])
         ->name('admin.faq.items.index');
-
     Route::get('/admin/faq/items/create', [FaqItemController::class, 'create'])
         ->name('admin.faq.items.create');
-
     Route::post('/admin/faq/items', [FaqItemController::class, 'store'])
         ->name('admin.faq.items.store');
-
     Route::get('/admin/faq/items/{item}/edit', [FaqItemController::class, 'edit'])
         ->name('admin.faq.items.edit');
-
     Route::put('/admin/faq/items/{item}', [FaqItemController::class, 'update'])
         ->name('admin.faq.items.update');
-
     Route::delete('/admin/faq/items/{item}', [FaqItemController::class, 'destroy'])
         ->name('admin.faq.items.destroy');
 
-    // ADMIN CONTACT BERICHTEN
+    // ADMIN CONTACTBERICHTEN
     Route::get('/admin/contact', [ContactMessageController::class, 'index'])
         ->name('admin.contact.index');
 });

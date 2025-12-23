@@ -89,6 +89,7 @@
                                 style="display: none;"
                             >
                                 <div class="bg-white rounded-lg shadow-lg border border-emerald-100 overflow-hidden">
+
                                     <a href="{{ route('admin.dashboard') }}"
                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
                                         Dashboard
@@ -98,12 +99,33 @@
                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
                                         Gebruikersbeheer
                                     </a>
+
+                                    <a href="{{ route('news.create') }}"
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
+                                        Nieuws toevoegen
+                                    </a>
+
+                                    <a href="{{ route('admin.faq.items.index') }}"
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
+                                        FAQ vragen
+                                    </a>
+
+                                    <a href="{{ route('admin.faq.categories.index') }}"
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
+                                        FAQ categorieën
+                                    </a>
+
+                                    <a href="{{ route('admin.contact.index') }}"
+                                       class="block px-4 py-2 text-sm text-gray-700 hover:bg-emerald-50">
+                                        Contactberichten
+                                    </a>
+
                                 </div>
                             </div>
                         </div>
                     @endif
 
-                    <!-- PROFIEL (ENKEL ÉÉN LINK) -->
+                    <!-- PROFIEL -->
                     <a href="{{ route('profile.show', auth()->user()->id) }}"
                        class="text-white hover:text-green-200 font-medium transition
                               px-3 py-2 rounded-lg hover:bg-green-600">
@@ -165,6 +187,29 @@
                        class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
                         Profiel
                     </a>
+
+                    @if(auth()->user()->is_admin)
+                        <div class="mt-2 pt-2 border-t border-green-600">
+                            <a href="{{ route('admin.dashboard') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                                Dashboard
+                            </a>
+                            <a href="{{ route('admin.users.index') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                                Gebruikersbeheer
+                            </a>
+                            <a href="{{ route('news.create') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                                Nieuws toevoegen
+                            </a>
+                            <a href="{{ route('admin.faq.items.index') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                                FAQ vragen
+                            </a>
+                            <a href="{{ route('admin.faq.categories.index') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                                FAQ categorieën
+                            </a>
+                            <a href="{{ route('admin.contact.index') }}" class="block text-white px-3 py-2 rounded-lg hover:bg-green-600 transition">
+                                Contactberichten
+                            </a>
+                        </div>
+                    @endif
 
                     <form method="POST" action="{{ route('logout') }}" class="mt-2">
                         @csrf

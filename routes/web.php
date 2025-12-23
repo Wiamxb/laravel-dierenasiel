@@ -5,45 +5,66 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsItemController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqItemController;
-use App\Http\Controllers\FaqController;
-use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Admin\ContactMessageController;
 use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\FaqController;
+use App\Http\Controllers\ContactController;
 
+// Publieke routes
 Route::view('/', 'welcome');
 
-Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
-
+// Nieuws
 Route::get('/news', [NewsItemController::class, 'index'])->name('news.index');
 Route::get('/news/{newsItem}', [NewsItemController::class, 'show'])->name('news.show');
 
-Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
+// FAQ
+Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
+// Contact
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
-Route::view('/dashboard', 'dashboard')
-    ->middleware(['auth', 'verified'])
-    ->name('dashboard');
+// Publiek profiel
+Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
+// Dashboard (ingelogd)
+Route::get('/dashboard', function () {
+    // Admins doorsturen naar admin dashboard
+    if (auth()->check() && auth()->user()->is_admin) {
+        return redirect()->route('admin.dashboard');
+    }
+
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+// Auth routes
 Route::middleware(['auth'])->group(function () {
 
-    // PROFIEL
+    // Profiel bewerken
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
 
-    // ADMIN USERS ✅
+// Admin routes
+Route::middleware(['auth', 'admin'])->group(function () {
+
+    // Admin dashboard
+    Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
+        ->name('admin.dashboard');
+
+    // Gebruikers
     Route::get('/admin/users', [UserController::class, 'index'])
         ->name('admin.users.index');
 
-    // ADMIN NEWS
+    // Admin nieuws
     Route::get('/admin/news/create', [NewsItemController::class, 'create'])->name('news.create');
     Route::post('/admin/news', [NewsItemController::class, 'store'])->name('news.store');
     Route::get('/admin/news/{newsItem}/edit', [NewsItemController::class, 'edit'])->name('news.edit');
     Route::put('/admin/news/{newsItem}', [NewsItemController::class, 'update'])->name('news.update');
     Route::delete('/admin/news/{newsItem}', [NewsItemController::class, 'destroy'])->name('news.destroy');
 
-    // FAQ CATEGORIEËN
+    // FAQ categorieën
     Route::get('/admin/faq/categories', [FaqCategoryController::class, 'index'])
         ->name('admin.faq.categories.index');
     Route::get('/admin/faq/categories/create', [FaqCategoryController::class, 'create'])
@@ -51,7 +72,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/admin/faq/categories', [FaqCategoryController::class, 'store'])
         ->name('admin.faq.categories.store');
 
-    // FAQ ITEMS
+    // FAQ items
     Route::get('/admin/faq/items', [FaqItemController::class, 'index'])
         ->name('admin.faq.items.index');
     Route::get('/admin/faq/items/create', [FaqItemController::class, 'create'])
@@ -65,9 +86,10 @@ Route::middleware(['auth'])->group(function () {
     Route::delete('/admin/faq/items/{item}', [FaqItemController::class, 'destroy'])
         ->name('admin.faq.items.destroy');
 
-    // ADMIN CONTACTBERICHTEN
+    // Contactberichten
     Route::get('/admin/contact', [ContactMessageController::class, 'index'])
         ->name('admin.contact.index');
 });
 
-require __DIR__.'/auth.php';
+// Auth routes van Laravel
+require __DIR__ . '/auth.php';

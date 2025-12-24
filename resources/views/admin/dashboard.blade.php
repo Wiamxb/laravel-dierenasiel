@@ -17,7 +17,7 @@
             <div class="bg-white border border-emerald-100 rounded-xl shadow-sm p-6 mb-8">
                 <p class="text-gray-700 text-sm">
                     Welkom <span class="font-semibold">{{ auth()->user()->name }}</span>,
-                    je bent ingelogd als administrator 👋
+                    je bent ingelogd als administrator
                 </p>
             </div>
 

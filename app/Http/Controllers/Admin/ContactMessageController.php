@@ -13,4 +13,13 @@ class ContactMessageController extends Controller
 
         return view('admin.contact.index', compact('messages'));
     }
+
+    public function destroy(ContactMessage $message)
+    {
+        $message->delete();
+
+        return redirect()
+            ->route('admin.contact.index')
+            ->with('success', 'Contactbericht succesvol verwijderd.');
+    }
 }

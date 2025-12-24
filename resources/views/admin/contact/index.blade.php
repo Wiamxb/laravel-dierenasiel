@@ -5,7 +5,7 @@
                 Contactberichten
             </h1>
             <p class="text-gray-600 mt-1">
-                Ingekomen berichten via het contactformulier
+                Beheer en beantwoord berichten van bezoekers
             </p>
         </div>
     </x-slot>
@@ -13,14 +13,26 @@
     <div class="py-10 bg-emerald-50 min-h-screen">
         <div class="max-w-7xl mx-auto px-6">
 
+            <!-- INFO VOOR ADMIN -->
+            <div class="mb-8 bg-white border border-emerald-200 rounded-xl p-6">
+                <h2 class="font-semibold text-lg text-gray-900 mb-2">
+                    Werkwijze
+                </h2>
+                <p class="text-gray-700 text-sm leading-relaxed">
+                    Contactberichten worden beantwoord via e-mail.
+                    Na het beantwoorden kan het bericht veilig verwijderd worden
+                    om het overzicht te bewaren.
+                </p>
+            </div>
+
             @if ($messages->count())
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
                     @foreach ($messages as $message)
-                        <div
-                            class="bg-white rounded-xl shadow hover:shadow-lg transition
-                                   overflow-hidden border border-emerald-100"
-                        >
+                        <div class="bg-white rounded-xl shadow
+                                    border border-emerald-100
+                                    flex flex-col justify-between">
+
                             <div class="p-6">
 
                                 <!-- NAAM -->
@@ -34,16 +46,39 @@
                                 </p>
 
                                 <!-- BERICHT -->
-                                <p class="text-sm text-gray-700 mb-4">
-                                    {{ Str::limit($message->message, 150) }}
+                                <p class="text-sm text-gray-700 mb-4 leading-relaxed">
+                                    {{ Str::limit($message->message, 200) }}
                                 </p>
 
                                 <!-- DATUM -->
-                                <div class="flex justify-between items-center text-sm text-gray-400">
-                                    <span>
-                                        {{ $message->created_at->format('d-m-Y H:i') }}
-                                    </span>
-                                </div>
+                                <p class="text-xs text-gray-400">
+                                    Ontvangen op {{ $message->created_at->format('d-m-Y H:i') }}
+                                </p>
+                            </div>
+
+                            <!-- ACTIES -->
+                            <div class="border-t border-gray-100 p-4 flex gap-3">
+
+                                <!-- ANTWOORD VIA EMAIL -->
+                                <a href="mailto:{{ $message->email }}"
+                                   class="flex-1 text-center bg-emerald-600 hover:bg-emerald-700
+                                          text-white text-sm font-semibold py-2 rounded-lg transition">
+                                    Antwoord via e-mail
+                                </a>
+
+                                <!-- VERWIJDEREN -->
+                                <form method="POST"
+                                      action="{{ route('admin.contact.destroy', $message) }}"
+                                      onsubmit="return confirm('Dit bericht definitief verwijderen?')">
+                                    @csrf
+                                    @method('DELETE')
+
+                                    <button
+                                        class="text-sm font-semibold text-red-600 hover:text-red-700
+                                               px-4 py-2 rounded-lg transition">
+                                        Verwijderen
+                                    </button>
+                                </form>
 
                             </div>
                         </div>
@@ -56,7 +91,7 @@
                         Geen contactberichten
                     </h3>
                     <p class="text-gray-600">
-                        Er zijn momenteel nog geen berichten binnengekomen.
+                        Er zijn momenteel geen nieuwe berichten.
                     </p>
                 </div>
             @endif

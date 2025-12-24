@@ -14,36 +14,40 @@ use App\Http\Controllers\ContactController;
 // Publieke routes
 Route::view('/', 'welcome');
 
-// Nieuws
+// Nieuws routes
 Route::get('/news', [NewsItemController::class, 'index'])->name('news.index');
 Route::get('/news/{newsItem}', [NewsItemController::class, 'show'])->name('news.show');
 
-// FAQ
+// FAQ routes
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
-// Contact
+// Contact routes
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
-// Publiek profiel
+// Publiek profiel bekijken
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
-// Dashboard (ingelogd)
+// Dashboard route
 Route::get('/dashboard', function () {
-    // Admins doorsturen naar admin dashboard
+
+    // Admin wordt doorgestuurd naar admin dashboard
     if (auth()->check() && auth()->user()->is_admin) {
         return redirect()->route('admin.dashboard');
     }
 
+    // Normale gebruikers dashboard
     return view('dashboard');
+
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Auth routes
+// Routes voor ingelogde gebruikers
 Route::middleware(['auth'])->group(function () {
 
     // Profiel bewerken
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
 });
 
 // Admin routes
@@ -53,11 +57,11 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
         ->name('admin.dashboard');
 
-    // Gebruikers
+    // Gebruikers beheren
     Route::get('/admin/users', [UserController::class, 'index'])
         ->name('admin.users.index');
 
-    // Admin nieuws
+    // Nieuws beheren
     Route::get('/admin/news/create', [NewsItemController::class, 'create'])->name('news.create');
     Route::post('/admin/news', [NewsItemController::class, 'store'])->name('news.store');
     Route::get('/admin/news/{newsItem}/edit', [NewsItemController::class, 'edit'])->name('news.edit');
@@ -89,7 +93,9 @@ Route::middleware(['auth', 'admin'])->group(function () {
     // Contactberichten
     Route::get('/admin/contact', [ContactMessageController::class, 'index'])
         ->name('admin.contact.index');
+    Route::delete('/admin/contact/{message}', [ContactMessageController::class, 'destroy'])
+        ->name('admin.contact.destroy');
 });
 
-// Auth routes van Laravel
+// Auth routes (login, register, ...)
 require __DIR__ . '/auth.php';

@@ -12,7 +12,6 @@ class UserController extends Controller
     {
         $query = User::query();
 
-        // ZOEKEN (naam of e-mail)
         if ($request->filled('search')) {
             $query->where(function ($q) use ($request) {
                 $q->where('name', 'like', '%' . $request->search . '%')
@@ -20,7 +19,6 @@ class UserController extends Controller
             });
         }
 
-        // FILTER (admin / user)
         if ($request->role === 'admin') {
             $query->where('is_admin', true);
         }
@@ -29,9 +27,22 @@ class UserController extends Controller
             $query->where('is_admin', false);
         }
 
-        // SORTERING
         $users = $query->orderBy('name')->get();
 
         return view('admin.users.index', compact('users'));
+    }
+
+    public function destroy(User $user)
+    {
+        // Admins en eigen account beschermen
+        if ($user->is_admin || $user->id === auth()->id()) {
+            abort(403);
+        }
+
+        $user->delete();
+
+        return redirect()
+            ->route('admin.users.index')
+            ->with('success', 'Gebruiker succesvol verwijderd.');
     }
 }

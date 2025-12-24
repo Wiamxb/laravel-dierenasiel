@@ -80,37 +80,73 @@
                             <th class="px-4 py-2 text-left font-semibold">Naam</th>
                             <th class="px-4 py-2 text-left font-semibold">E-mail</th>
                             <th class="px-4 py-2 text-left font-semibold">Rol</th>
+                            <th class="px-4 py-2 text-right font-semibold">Acties</th>
                         </tr>
                         </thead>
 
                         <tbody class="divide-y">
                         @forelse ($users as $user)
                             <tr class="hover:bg-gray-50 transition">
+
+                                <!-- NAAM -->
                                 <td class="px-4 py-2 font-medium text-gray-900">
                                     {{ $user->name }}
                                 </td>
 
+                                <!-- EMAIL -->
                                 <td class="px-4 py-2 text-gray-600">
                                     {{ $user->email }}
                                 </td>
 
+                                <!-- ROL -->
                                 <td class="px-4 py-2">
                                     @if($user->is_admin)
-                                        <span class="inline-flex px-2 py-1 text-xs font-semibold
-                                                         bg-emerald-100 text-emerald-800 rounded-full">
-                                                Admin
-                                            </span>
+                                        <span
+                                            class="inline-flex px-3 py-1 text-sm font-medium
+                                                   bg-emerald-100 text-emerald-800 rounded-md">
+                                            Admin
+                                        </span>
                                     @else
-                                        <span class="inline-flex px-2 py-1 text-xs font-semibold
-                                                         bg-gray-100 text-gray-700 rounded-full">
-                                                User
-                                            </span>
+                                        <span
+                                            class="inline-flex px-3 py-1 text-sm font-medium
+                                                   bg-gray-100 text-gray-700 rounded-md">
+                                            User
+                                        </span>
                                     @endif
                                 </td>
+
+                                <!-- ACTIES -->
+                                <td class="px-4 py-2 text-right">
+                                    @if(!$user->is_admin)
+                                        <form method="POST"
+                                              action="{{ route('admin.users.destroy', $user) }}"
+                                              onsubmit="return confirm('Weet je zeker dat je deze gebruiker wil verwijderen?')">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button
+                                                class="inline-flex items-center px-3 py-1
+                                                       text-sm font-medium rounded-md
+                                                       text-red-700 bg-red-50
+                                                       hover:bg-red-100 transition">
+                                                Verwijderen
+                                            </button>
+                                        </form>
+                                    @else
+                                        <span
+                                            class="inline-flex items-center px-3 py-1
+                                                   text-sm font-medium rounded-md
+                                                   text-gray-600 bg-gray-100">
+                                            Beschermd
+                                        </span>
+                                    @endif
+                                </td>
+
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="3" class="px-4 py-8 text-center text-gray-500">
+                                <td colspan="4"
+                                    class="px-4 py-8 text-center text-gray-500">
                                     Geen gebruikers gevonden
                                 </td>
                             </tr>
@@ -119,8 +155,13 @@
                     </table>
                 </div>
 
-            </div>
+                <!-- INFO -->
+                <p class="text-sm text-gray-500">
+                    Admins kunnen enkel gewone gebruikers verwijderen.
+                    Administrator-accounts zijn beschermd.
+                </p>
 
+            </div>
         </div>
     </div>
 </x-app-layout>

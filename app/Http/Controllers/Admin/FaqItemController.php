@@ -9,10 +9,27 @@ use Illuminate\Http\Request;
 
 class FaqItemController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $items = FaqItem::with('category')->get();
-        return view('admin.faq.items.index', compact('items'));
+        $query = FaqItem::with('category');
+
+        // Zoeken op vraag of antwoord
+        if ($request->filled('search')) {
+            $query->where(function ($q) use ($request) {
+                $q->where('question', 'like', '%' . $request->search . '%')
+                    ->orWhere('answer', 'like', '%' . $request->search . '%');
+            });
+        }
+
+        // Filter op categorie
+        if ($request->filled('category')) {
+            $query->where('faq_category_id', $request->category);
+        }
+
+        $items = $query->orderBy('updated_at', 'desc')->get();
+        $categories = FaqCategory::orderBy('name')->get();
+
+        return view('admin.faq.items.index', compact('items', 'categories'));
     }
 
     public function create()

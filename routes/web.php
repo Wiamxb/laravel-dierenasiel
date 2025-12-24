@@ -3,45 +3,45 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NewsItemController;
+use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\FaqCategoryController;
 use App\Http\Controllers\Admin\FaqItemController;
 use App\Http\Controllers\Admin\ContactMessageController;
-use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\ContactController;
 
 // Publieke routes
 Route::view('/', 'welcome');
 
-// Nieuws routes
+// Nieuws
 Route::get('/news', [NewsItemController::class, 'index'])->name('news.index');
 Route::get('/news/{newsItem}', [NewsItemController::class, 'show'])->name('news.show');
 
-// FAQ routes
+// FAQ
 Route::get('/faq', [FaqController::class, 'index'])->name('faq.index');
 
-// Contact routes
+// Contact
 Route::get('/contact', [ContactController::class, 'create'])->name('contact.create');
 Route::post('/contact', [ContactController::class, 'store'])->name('contact.store');
 
-// Publiek profiel bekijken
+// Publiek profiel
 Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.show');
 
-// Dashboard route
+// Dashboard
 Route::get('/dashboard', function () {
 
-    // Admin wordt doorgestuurd naar admin dashboard
+    // Admin naar admin dashboard
     if (auth()->check() && auth()->user()->is_admin) {
         return redirect()->route('admin.dashboard');
     }
 
-    // Normale gebruikers dashboard
+    // Normale gebruiker
     return view('dashboard');
 
 })->middleware(['auth', 'verified'])->name('dashboard');
 
-// Routes voor ingelogde gebruikers
+// Ingelogde gebruiker
 Route::middleware(['auth'])->group(function () {
 
     // Profiel bewerken
@@ -57,14 +57,13 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
         ->name('admin.dashboard');
 
-    // Gebruikers beheren
+    // Gebruikers
     Route::get('/admin/users', [UserController::class, 'index'])
         ->name('admin.users.index');
-
     Route::delete('/admin/users/{user}', [UserController::class, 'destroy'])
         ->name('admin.users.destroy');
 
-    // Nieuws beheren
+    // Nieuws
     Route::get('/admin/news/create', [NewsItemController::class, 'create'])->name('news.create');
     Route::post('/admin/news', [NewsItemController::class, 'store'])->name('news.store');
     Route::get('/admin/news/{newsItem}/edit', [NewsItemController::class, 'edit'])->name('news.edit');
@@ -100,5 +99,5 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('admin.contact.destroy');
 });
 
-// Auth routes (login, register, ...)
+// Auth (login, register, logout)
 require __DIR__ . '/auth.php';

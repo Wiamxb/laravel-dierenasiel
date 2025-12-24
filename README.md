@@ -113,18 +113,31 @@ FAQ
 - Admin beheert categorieën en vragen
 - Bezoekers zien een overzichtelijke FAQ-pagina
 
-CONTACT
-- Bezoekers sturen berichten via het contactformulier
-- Admin kan berichten bekijken (inbox)
+CONTACT (bezoekers & gebruikers) 
+- Bezoekers en ingelogde users kunnen berichten sturen via het contactformulier
 
-GEBRUIKERS
-- Admin kan alle gebruikers bekijken
-- Zoek- en filterfunctie
+CONTACT (Admin)
+- Admin ziet een overzicht van alle contactberichten
+- Berichten kunnen beantwoord worden via e-mail
+- Na afhandeling kan een bericht veilig verwijderd worden
+- Lange berichten worden ingekort voor overzicht
+
+GEBRUIKERSBEHEER (Admin)
+- Overzicht van alle gebruikers
+- Zoekfunctie op naam en e-mail
+- Filter op rol (admin / gebruiker)
+- Beveiliging: admins kunnen geen andere admins verwijderen
 
 AUTHENTICATIE
 - Inloggen en registreren
-- Automatische doorverwijzing op basis van rol
-- Beveiligde admin-routes
+- Rolgebaseerde toegang (gebruiker / admin)
+- Sessies en login-beveiliging via Laravel Breeze / Fortify
+
+BEVEILIGING
+- Admin-routes afgeschermd met middleware
+- Alleen admins hebben toegang tot het beheerpaneel
+- Automatische doorverwijzing naar het juiste dashboard
+- CRUD-acties beperkt op basis van rol
 
 --------------------------------------------------
 
@@ -150,3 +163,4 @@ AUTEUR
 - Naam       : Wi'âm Bola
 - Opleiding  : Toegepaste Informatica
 - School     : Erasmushogeschool Brussel
+

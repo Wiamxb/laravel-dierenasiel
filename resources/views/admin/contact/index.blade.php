@@ -45,13 +45,31 @@
                                     {{ $message->email }}
                                 </p>
 
-                                <!-- BERICHT -->
-                                <p class="text-sm text-gray-700 mb-4 leading-relaxed">
-                                    {{ Str::limit($message->message, 200) }}
-                                </p>
+                                <!-- BERICHT MET LEES MEER -->
+                                <div x-data="{ open: false }">
+                                    <p class="text-sm text-gray-700 mb-2 leading-relaxed">
+                                        <span x-show="!open">
+                                            {{ Str::limit($message->message, 200) }}
+                                        </span>
+
+                                        <span x-show="open">
+                                            {{ $message->message }}
+                                        </span>
+                                    </p>
+
+                                    @if(strlen($message->message) > 200)
+                                        <button
+                                            @click="open = !open"
+                                            class="text-sm text-emerald-700 font-medium hover:underline"
+                                        >
+                                            <span x-show="!open">Lees meer</span>
+                                            <span x-show="open">Lees minder</span>
+                                        </button>
+                                    @endif
+                                </div>
 
                                 <!-- DATUM -->
-                                <p class="text-xs text-gray-400">
+                                <p class="text-xs text-gray-400 mt-3">
                                     Ontvangen op {{ $message->created_at->format('d-m-Y H:i') }}
                                 </p>
                             </div>

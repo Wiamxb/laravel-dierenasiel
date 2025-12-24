@@ -105,26 +105,48 @@ ROLLEN EN RECHTEN
 
 FUNCTIONALITEITEN
 
-NIEUWS
-- Admin kan nieuws aanmaken, bewerken en verwijderen
-- Bezoekers kunnen nieuws lezen
+NIEUWS (bezoekers & gebruikers) 
+- Overzicht van nieuwsberichten
+- Detailpagina per nieuwsbericht
 
-FAQ
-- Admin beheert categorieën en vragen
-- Bezoekers zien een overzichtelijke FAQ-pagina
+NIEUWS (Admin) 
+- Aanmaken, bewerken en verwijderen van nieuws
+- Toevoegen van afbeeldingen bij nieuwsberichten
 
-CONTACT
-- Bezoekers sturen berichten via het contactformulier
-- Admin kan berichten bekijken (inbox)
+FAQ (bezoekers & gebruikers) 
+- Overzicht van veelgestelde vragen
+- Vragen gegroepeerd per categorie
 
-GEBRUIKERS
-- Admin kan alle gebruikers bekijken
-- Zoek- en filterfunctie
+FAQ (Admin) 
+- Beheer van FAQ-categorieën
+- Beheer van FAQ-vragen (CRUD)
+- Zoeken binnen FAQ-vragen + filteren op categorie voor beter overzicht
+
+CONTACT (bezoekers & gebruikers) 
+- Bezoekers en ingelogde users kunnen berichten sturen via het contactformulier
+
+CONTACT (Admin)
+- Admin ziet een overzicht van alle contactberichten
+- Berichten kunnen beantwoord worden via e-mail
+- Na afhandeling kan een bericht veilig verwijderd worden
+- Lange berichten worden ingekort voor overzicht
+
+GEBRUIKERSBEHEER (Admin)
+- Overzicht van alle gebruikers
+- Zoekfunctie op naam en e-mail
+- Filter op rol (admin / gebruiker)
+- Beveiliging: admins kunnen geen andere admins verwijderen
 
 AUTHENTICATIE
 - Inloggen en registreren
-- Automatische doorverwijzing op basis van rol
-- Beveiligde admin-routes
+- Rolgebaseerde toegang (gebruiker / admin)
+- Sessies en login-beveiliging via Laravel Breeze / Fortify
+
+BEVEILIGING
+- Admin-routes afgeschermd met middleware
+- Alleen admins hebben toegang tot het beheerpaneel
+- Automatische doorverwijzing naar het juiste dashboard
+- CRUD-acties beperkt op basis van rol
 
 --------------------------------------------------
 
@@ -150,3 +172,5 @@ AUTEUR
 - Naam       : Wi'âm Bola
 - Opleiding  : Toegepaste Informatica
 - School     : Erasmushogeschool Brussel
+
+

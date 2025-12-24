@@ -105,13 +105,22 @@ ROLLEN EN RECHTEN
 
 FUNCTIONALITEITEN
 
-NIEUWS
-- Admin kan nieuws aanmaken, bewerken en verwijderen
-- Bezoekers kunnen nieuws lezen
+NIEUWS (bezoekers & gebruikers) 
+- Overzicht van nieuwsberichten
+- Detailpagina per nieuwsbericht
 
-FAQ
-- Admin beheert categorieën en vragen
-- Bezoekers zien een overzichtelijke FAQ-pagina
+NIEUWS (Admin) 
+- Aanmaken, bewerken en verwijderen van nieuws
+- Toevoegen van afbeeldingen bij nieuwsberichten
+
+FAQ (bezoekers & gebruikers) 
+- Overzicht van veelgestelde vragen
+- Vragen gegroepeerd per categorie
+
+FAQ (Admin) 
+- Beheer van FAQ-categorieën
+- Beheer van FAQ-vragen (CRUD)
+- Zoeken binnen FAQ-vragen + filteren op categorie voor beter overzicht
 
 CONTACT (bezoekers & gebruikers) 
 - Bezoekers en ingelogde users kunnen berichten sturen via het contactformulier
@@ -163,4 +172,5 @@ AUTEUR
 - Naam       : Wi'âm Bola
 - Opleiding  : Toegepaste Informatica
 - School     : Erasmushogeschool Brussel
+
 

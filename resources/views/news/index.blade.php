@@ -9,14 +9,15 @@
     </x-slot>
 
     <div class="py-10 bg-emerald-50 min-h-screen">
-    <div class="max-w-7xl mx-auto px-6">
+        <div class="max-w-7xl mx-auto px-6">
 
             {{-- ADMIN: nieuws toevoegen --}}
             @auth
                 @if(auth()->user()->is_admin)
                     <div class="flex justify-end mb-6">
                         <a href="{{ route('news.create') }}"
-                           class="inline-flex items-center px-5 py-2 bg-emerald-700 text-white font-semibold
+                           class="inline-flex items-center px-5 py-2
+                                  bg-emerald-700 text-white font-semibold
                                   rounded-lg hover:bg-emerald-800 transition shadow">
                             + Nieuws toevoegen
                         </a>
@@ -27,11 +28,14 @@
             @if ($news->count())
                 <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($news as $item)
-                        <div class="bg-white rounded-xl shadow hover:shadow-lg transition overflow-hidden border border-emerald-100">
+                        <div class="bg-white rounded-xl shadow
+                                    hover:shadow-lg transition
+                                    overflow-hidden border border-emerald-100">
 
+                            {{-- AFBEELDING --}}
                             @if ($item->image)
                                 <img
-                                    src="{{ asset('storage/' . $item->image) }}"
+                                    src="{{ asset($item->image) }}"
                                     alt="{{ $item->title }}"
                                     class="w-full h-48 object-cover"
                                 >

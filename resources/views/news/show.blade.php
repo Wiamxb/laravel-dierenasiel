@@ -10,7 +10,7 @@
                 </a>
 
                 @auth
-                    @if(auth()->user()->is_admin === 1)
+                    @if(auth()->user()->is_admin)
                         <a href="{{ route('news.edit', $newsItem) }}"
                            class="px-4 py-2 text-sm font-medium
                                   bg-emerald-700 text-white
@@ -21,11 +21,13 @@
                 @endauth
             </div>
 
-            <article class="bg-white rounded-2xl shadow-lg overflow-hidden border border-emerald-100">
+            <article class="bg-white rounded-2xl shadow-lg
+                            overflow-hidden border border-emerald-100">
 
+                {{-- AFBEELDING --}}
                 @if ($newsItem->image)
                     <img
-                        src="{{ asset('storage/' . $newsItem->image) }}"
+                        src="{{ asset($newsItem->image) }}"
                         alt="{{ $newsItem->title }}"
                         class="w-full h-80 object-cover"
                     >

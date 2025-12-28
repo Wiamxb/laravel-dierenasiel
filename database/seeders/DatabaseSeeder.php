@@ -13,6 +13,7 @@ class DatabaseSeeder extends Seeder
             FaqCategorySeeder::class,
             FaqItemSeeder::class,
             NewsItemSeeder::class,
+            ContactMessageSeeder::class,
         ]);
     }
 }

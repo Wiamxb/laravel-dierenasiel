@@ -13,6 +13,12 @@
     <div class="bg-emerald-50 min-h-screen py-10">
         <div class="max-w-2xl mx-auto px-6">
 
+            <!-- Terug naar profiel -->
+            <a href="{{ route('profile.show', $user->id) }}"
+               class="inline-block text-sm text-emerald-700 mb-6 hover:underline">
+                ← Terug naar mijn profiel
+            </a>
+
             <div class="bg-white border border-emerald-100 rounded-xl shadow-sm p-6">
 
                 <form method="POST"
@@ -92,9 +98,9 @@
                     </div>
 
                     <!-- ACTIES -->
-                    <div class="flex justify-end gap-4 pt-4">
-                        <a href="{{ route('dashboard') }}"
-                           class="text-sm text-gray-600 hover:underline">
+                    <div class="flex justify-end items-center gap-4 pt-4">
+                        <a href="{{ route('profile.show', $user->id) }}"
+                           class="text-sm font-medium text-gray-600 hover:underline">
                             Annuleren
                         </a>
 

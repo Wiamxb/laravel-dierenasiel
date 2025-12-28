@@ -13,7 +13,8 @@ class UserSeeder extends Seeder
     {
         // ADMIN
         User::create([
-            'name' => 'admin',
+            'name' => 'Admin',
+            'username' => 'admin',
             'email' => 'admin@ehb.be',
             'password' => Hash::make('Password!321'),
             'is_admin' => true,
@@ -22,14 +23,15 @@ class UserSeeder extends Seeder
             'profile_photo' => 'images/profiles/admin.jpg',
         ]);
 
-        // GEBRUIKER
+        // GEWONE GEBRUIKER
         User::create([
-            'name' => 'wiam',
-            'email' => 'wiam@ehb.be',
+            'name' => 'User',
+            'username' => 'user',
+            'email' => 'user@ehb.be',
             'password' => Hash::make('Password!321'),
             'is_admin' => false,
             'birthday' => Carbon::create(2002, 9, 14),
-            'about_me' => 'Dierenliefhebber en trouwe supporter van het dierenasiel.',
+            'about_me' => 'Gewone gebruiker van de website van het dierenasiel.',
             'profile_photo' => 'images/profiles/user1.jpg',
         ]);
     }

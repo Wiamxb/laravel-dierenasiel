@@ -71,7 +71,7 @@ ADMINISTRATOR
 - Doorverwijzing   : Admin dashboard
 
 GEBRUIKER
-- E-mail           : wiam@ehb.be
+- E-mail           : user@ehb.be
 - Wachtwoord       : password!321
 - Rol              : Gewone gebruiker
 - Doorverwijzing   : Gebruikersdashboard
@@ -194,3 +194,4 @@ AUTEUR
 - Naam       : Wi'âm Bola
 - Opleiding  : Toegepaste Informatica
 - School     : Erasmushogeschool Brussel
+

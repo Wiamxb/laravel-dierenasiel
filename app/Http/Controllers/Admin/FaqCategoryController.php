@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class FaqCategoryController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $categories = FaqCategory::withCount('faqItems')->get();
+        $query = FaqCategory::withCount('faqItems');
+
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        $categories = $query->orderBy('name')->get();
 
         return view('admin.faq.categories.index', compact('categories'));
     }
@@ -22,14 +28,23 @@ class FaqCategoryController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'name' => 'required|string|max:255',
         ]);
 
-        FaqCategory::create([
-            'name' => $request->name,
-        ]);
+        FaqCategory::create($validated);
 
-        return redirect()->route('admin.faq.categories.index');
+        return redirect()
+            ->route('admin.faq.categories.index')
+            ->with('success', 'Categorie toegevoegd.');
+    }
+
+    public function destroy(FaqCategory $category)
+    {
+        $category->delete();
+
+        return redirect()
+            ->route('admin.faq.categories.index')
+            ->with('success', 'Categorie verwijderd.');
     }
 }

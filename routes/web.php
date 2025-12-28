@@ -30,30 +30,23 @@ Route::get('/profile/{id}', [ProfileController::class, 'show'])->name('profile.s
 
 // Dashboard
 Route::get('/dashboard', function () {
-
-    // Admin naar admin dashboard
     if (auth()->check() && auth()->user()->is_admin) {
         return redirect()->route('admin.dashboard');
     }
 
-    // Normale gebruiker
     return view('dashboard');
-
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 // Ingelogde gebruiker
 Route::middleware(['auth'])->group(function () {
-
-    // Profiel bewerken
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
-
 });
 
 // Admin routes
 Route::middleware(['auth', 'admin'])->group(function () {
 
-    // Admin dashboard
+    // Dashboard
     Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
         ->name('admin.dashboard');
 
@@ -77,6 +70,8 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('admin.faq.categories.create');
     Route::post('/admin/faq/categories', [FaqCategoryController::class, 'store'])
         ->name('admin.faq.categories.store');
+    Route::delete('/admin/faq/categories/{category}', [FaqCategoryController::class, 'destroy'])
+        ->name('admin.faq.categories.destroy');
 
     // FAQ items
     Route::get('/admin/faq/items', [FaqItemController::class, 'index'])
@@ -99,5 +94,4 @@ Route::middleware(['auth', 'admin'])->group(function () {
         ->name('admin.contact.destroy');
 });
 
-// Auth (login, register, logout)
 require __DIR__ . '/auth.php';

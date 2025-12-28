@@ -45,8 +45,17 @@ INSTALLATIE
    - cp .env.example .env
    - php artisan key:generate
 
-4. Database migreren
-   - php artisan migrate
+4. Database migreren en seeden (**BELANGRIJK**)
+   - php artisan migrate:fresh --seed
+
+   Dit project bevat seeders met voorbeelddata zodat
+   de applicatie onmiddellijk bruikbaar is na installatie.
+   De seeders zorgen voor:
+   - Een admin account
+   - Een gewone gebruiker
+   - Nieuwsitems met afbeeldingen
+   - FAQ-categorieën en FAQ-vragen
+   - Contactberichten voor het adminpaneel
 
 5. Server starten
    - php artisan serve
@@ -105,28 +114,29 @@ ROLLEN EN RECHTEN
 
 FUNCTIONALITEITEN
 
-NIEUWS (bezoekers & gebruikers) 
+NIEUWS (bezoekers & gebruikers)
 - Overzicht van nieuwsberichten
 - Detailpagina per nieuwsbericht
 
-NIEUWS (Admin) 
+NIEUWS (Admin)
 - Aanmaken, bewerken en verwijderen van nieuws
 - Toevoegen van afbeeldingen bij nieuwsberichten
 
-FAQ (bezoekers & gebruikers) 
+FAQ (bezoekers & gebruikers)
 - Overzicht van veelgestelde vragen
 - Vragen gegroepeerd per categorie
 
-FAQ (Admin) 
+FAQ (Admin)
 - Beheer van FAQ-categorieën
 - Beheer van FAQ-vragen (CRUD)
-- Zoeken binnen FAQ-vragen + filteren op categorie voor beter overzicht
+- Zoeken binnen FAQ-vragen en filteren op categorie
 
-CONTACT (bezoekers & gebruikers) 
-- Bezoekers en ingelogde users kunnen berichten sturen via het contactformulier
+CONTACT (bezoekers & gebruikers)
+- Bezoekers en ingelogde users kunnen berichten sturen
+  via het contactformulier
 
 CONTACT (Admin)
-- Admin ziet een overzicht van alle contactberichten
+- Overzicht van alle contactberichten
 - Berichten kunnen beantwoord worden via e-mail
 - Na afhandeling kan een bericht veilig verwijderd worden
 - Lange berichten worden ingekort voor overzicht
@@ -137,12 +147,16 @@ GEBRUIKERSBEHEER (Admin)
 - Filter op rol (admin / gebruiker)
 - Beveiliging: admins kunnen geen andere admins verwijderen
 
+--------------------------------------------------
+
 AUTHENTICATIE
+
 - Inloggen en registreren
 - Rolgebaseerde toegang (gebruiker / admin)
 - Sessies en login-beveiliging via Laravel Breeze / Fortify
 
 BEVEILIGING
+
 - Admin-routes afgeschermd met middleware
 - Alleen admins hebben toegang tot het beheerpaneel
 - Automatische doorverwijzing naar het juiste dashboard
@@ -167,10 +181,16 @@ OPMERKINGEN
 
 --------------------------------------------------
 
+BRONNEN
+
+- Laravel documentatie: https://laravel.com/docs
+- Tailwind CSS documentatie: https://tailwindcss.com/docs
+- Laravel Breeze / Fortify documentatie
+
+--------------------------------------------------
+
 AUTEUR
 
 - Naam       : Wi'âm Bola
 - Opleiding  : Toegepaste Informatica
 - School     : Erasmushogeschool Brussel
-
-

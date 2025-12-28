@@ -4,7 +4,7 @@
             <h1 class="text-2xl font-semibold text-gray-900">
                 Mijn profiel bewerken
             </h1>
-            <p class="text-gray-500 mt-1 text-sm">
+            <p class="text-sm text-gray-500 mt-1">
                 Pas je persoonlijke gegevens aan
             </p>
         </div>
@@ -18,21 +18,20 @@
                 <form method="POST"
                       action="{{ route('profile.update') }}"
                       enctype="multipart/form-data"
-                      class="space-y-5">
+                      class="space-y-6">
 
                     @csrf
 
                     <!-- GEBRUIKERSNAAM -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
                             Gebruikersnaam
                         </label>
                         <input
                             type="text"
                             name="username"
                             value="{{ old('username', $user->username) }}"
-                            class="w-full rounded-md border-gray-300
-                                   text-gray-900 text-sm
+                            class="w-full rounded-md border-gray-300 text-sm
                                    focus:border-emerald-500 focus:ring-emerald-500"
                             required
                         >
@@ -40,45 +39,45 @@
 
                     <!-- VERJAARDAG -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
                             Verjaardag
                         </label>
                         <input
                             type="date"
                             name="birthday"
-                            value="{{ old('birthday', $user->birthday) }}"
-                            class="w-full rounded-md border-gray-300
-                                   text-gray-900 text-sm
+                            value="{{ old('birthday', optional($user->birthday)->format('Y-m-d')) }}"
+                            class="w-full rounded-md border-gray-300 text-sm
                                    focus:border-emerald-500 focus:ring-emerald-500"
                         >
                     </div>
 
                     <!-- OVER MIJ -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-1">
                             Over mij
                         </label>
                         <textarea
                             name="about_me"
                             rows="4"
-                            class="w-full rounded-md border-gray-300
-                                   text-gray-900 text-sm
+                            class="w-full rounded-md border-gray-300 text-sm
                                    focus:border-emerald-500 focus:ring-emerald-500"
                         >{{ old('about_me', $user->about_me) }}</textarea>
                     </div>
 
                     <!-- PROFIELFOTO -->
                     <div>
-                        <label class="block text-sm font-semibold text-gray-700 mb-1">
+                        <label class="block text-sm font-medium text-gray-700 mb-2">
                             Profielfoto
                         </label>
 
                         @if ($user->profile_photo)
-                            <img
-                                src="{{ asset('storage/' . $user->profile_photo) }}"
-                                alt="Huidige profielfoto"
-                                class="w-32 h-32 object-cover rounded-full mb-3 border"
-                            >
+                            <div class="mb-3">
+                                <img
+                                    src="{{ asset($user->profile_photo) }}"
+                                    alt="Huidige profielfoto"
+                                    class="w-28 h-28 rounded-full object-cover border border-gray-200"
+                                >
+                            </div>
                         @endif
 
                         <input
@@ -93,15 +92,15 @@
                     </div>
 
                     <!-- ACTIES -->
-                    <div class="flex justify-end items-center gap-4 pt-4">
-                        <a href="{{ url()->previous() }}"
-                           class="text-sm font-medium text-gray-600 hover:underline">
+                    <div class="flex justify-end gap-4 pt-4">
+                        <a href="{{ route('dashboard') }}"
+                           class="text-sm text-gray-600 hover:underline">
                             Annuleren
                         </a>
 
                         <button
                             type="submit"
-                            class="px-4 py-2 text-sm font-medium
+                            class="px-5 py-2 text-sm font-medium
                                    bg-emerald-700 text-white
                                    rounded-md hover:bg-emerald-800 transition">
                             Opslaan
@@ -109,6 +108,7 @@
                     </div>
 
                 </form>
+
             </div>
 
         </div>
